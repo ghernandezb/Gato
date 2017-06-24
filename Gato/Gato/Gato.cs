@@ -9,22 +9,100 @@ namespace Gato
 {
     class Gato
     {
-        public string[,] TablaDeJuego { get; private set; }
+        public const char P1 = 'X';
+        public const char P2 = 'O';
+
+        public char?[,] TablaDeJuego { get; private set; }
         public Jugador Jugador1 { get; private set; }
         public Jugador Jugador2 { get; private set; }
+        public bool Turno { get; private set; }
 
         public Gato(Jugador jugador1, Jugador jugador2)
         {
             if (jugador1 == null)
             {
-                throw new PlayerNullException(1)
+                throw new PlayerNullException(1);
             }
 
-            TablaDeJuego = new string[3, 3];
+            if (jugador2 == null)
+            {
+                throw new PlayerNullException(2);
+            }
+
+            TablaDeJuego = new char?[3, 3];
             Jugador1 = jugador1;
             Jugador2 = jugador2;
+            Turno = true;
         }
 
+        public bool IngresarLocacion(int x, int y)
+        {
+            try
+            {
+                if (TablaDeJuego[x, y] == null)
+                {
+                    TablaDeJuego[x, y] = Turno ? P1 : P2;
+                    Turno = !Turno;
+                    return true;
+                }
+                return false;
+            }
+            catch (IndexOutOfRangeException)
+            {
+                return false;
+            }
+        }
 
+        public Jugador Comprobar(out bool termino)
+        {
+            Jugador ganador = null;
+            termino = true;
+            char? symbol = null;
+            if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[0, 1] && TablaDeJuego[0, 0] == TablaDeJuego[0, 2])
+            {
+                symbol = TablaDeJuego[0, 0];
+            }
+            else if (TablaDeJuego[1, 0] != null && TablaDeJuego[1, 0] == TablaDeJuego[1, 1] && TablaDeJuego[1, 0] == TablaDeJuego[1, 2])
+            {
+                symbol = TablaDeJuego[1, 0];
+            }
+            else if (TablaDeJuego[2, 0] != null && TablaDeJuego[2, 0] == TablaDeJuego[2, 1] && TablaDeJuego[2, 0] == TablaDeJuego[2, 2])
+            {
+                symbol = TablaDeJuego[2, 0];
+            }
+            else if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[1, 0] && TablaDeJuego[0, 0] == TablaDeJuego[2, 0])
+            {
+                symbol = TablaDeJuego[0, 0];
+            }
+            else if (TablaDeJuego[0, 1] != null && TablaDeJuego[0, 1] == TablaDeJuego[1, 1] && TablaDeJuego[0, 1] == TablaDeJuego[2, 1])
+            {
+                symbol = TablaDeJuego[2, 1];
+            }
+            else if (TablaDeJuego[0, 2] != null && TablaDeJuego[0, 2] == TablaDeJuego[1, 2] && TablaDeJuego[0, 2] == TablaDeJuego[2, 2])
+            {
+                symbol = TablaDeJuego[0, 0];
+            }
+            else
+            {
+                for (int x = 0; x < TablaDeJuego.GetLength(0); x++)
+                {
+                    for (int y = 0; y < TablaDeJuego.GetLength(1); y++)
+                    {
+                        if (TablaDeJuego[x, y] == null)
+                        {
+                            termino = false;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (symbol != null)
+            {
+                ganador = symbol == P1 ? Jugador1 : Jugador2;
+            }
+
+            return ganador;
+        }
     }
 }
