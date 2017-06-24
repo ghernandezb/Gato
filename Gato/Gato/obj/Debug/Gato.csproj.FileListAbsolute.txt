@@ -1,0 +1,6 @@
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.exe.config
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.exe
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.pdb
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.csprojResolveAssemblyReference.cache
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.exe
+C:\Users\Discovery XP\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.pdb
