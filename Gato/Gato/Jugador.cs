@@ -11,10 +11,9 @@ namespace Gato
         public string Nombre { get; set; }
         public int Puntaje { get; private set; }
 
-        public Jugador (string nombre, int puntaje)
+        public Jugador (string nombre)
         {
             Nombre = nombre;
-            Puntaje = puntaje;
         }
     }
 }
