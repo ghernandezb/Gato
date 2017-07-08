@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Coordenada.cs" />
     <Compile Include="CustomExceptions\PlayerNullException.cs" />
     <Compile Include="Gato.cs" />
     <Compile Include="Jugador.cs" />

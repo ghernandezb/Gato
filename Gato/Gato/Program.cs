@@ -54,6 +54,7 @@ namespace Gato
                                           + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]
                                           + " "
                                           + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]);
+
                         Gato gatoSolo = new Gato(jugador1, jugadorIA);
 
                         do
@@ -62,77 +63,52 @@ namespace Gato
 
                             PintarGato(gatoSolo);
 
+
+                            Jugador ganador = gatoSolo.Comprobar(out gatoFin);
+                            if (ganador != null)
+                            {
+                                Console.WriteLine("¡" + ganador.Nombre + " ha ganado!");
+                                break;
+                            }
+
                             if (gatoSolo.Turno)
                             {
                                 Console.WriteLine("Es el turno de " + jugador1.Nombre);
                                 Console.WriteLine("");
+
+                                bool valido;
                                 do
                                 {
-                                    Console.WriteLine("En que COLUMNA deseas ingresar un valor (1, 2, 3)?");
-                                    valorColumna = (ComprobacionNumero(Console.ReadLine(), 1, 3) - 1);
-
-                                    if (valorColumna < 0)
+                                    string opcion = Console.ReadLine();
+                                    Coordenada coord;
+                                    if (valido = Gato.Coordenadas.TryGetValue(opcion.ToUpper(), out coord))
                                     {
+                                        if (!(valido = gatoSolo.IngresarLocacion(coord.X, coord.Y)))
+                                        {
+                                            Console.WriteLine("");
+                                            Console.WriteLine("La ubicacion indicada ya se encuentra llena.");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("");
                                         Console.WriteLine("El valor ingresado no es correcto.");
                                     }
-
-                                } while (valorColumna < 0);
-
-                                do
-                                {
-                                    Console.WriteLine("");
-                                    Console.WriteLine("En que FILA deseas ingresar un valor (A, B, C)?");
-                                    string valorTempFila = Console.ReadLine();
-
-                                    switch (valorTempFila.ToUpper())
-                                    {
-                                        case "A":
-                                            valorFila = 0;
-                                            break;
-
-                                        case "B":
-                                            valorFila = 1;
-                                            break;
-
-                                        case "C":
-                                            valorFila = 2;
-                                            break;
-
-                                        default:
-                                            Console.WriteLine("Valor ingresado incorrecto.");
-                                            valorColumna = -1;
-                                            break;
-                                    }
-                                } while (valorColumna < 0);
-
-                                if (!(gatoSolo.IngresarLocacion(valorFila, valorColumna)))
-                                {
-                                    Console.WriteLine("");
-                                    Console.WriteLine("La ubicacion indicada ya se encuentra llena.");
-                                    Console.WriteLine("Presione ENTER para ingresar una nueva ubicacion");
-                                    Console.ReadLine();
-                                }
+                                } while (!valido);
                             }
                             else
                             {
                                 Console.WriteLine("Es el turno de " + jugadorIA.Nombre);
                                 Console.WriteLine("");
 
-                                do
+                                List<Coordenada> coords = gatoSolo.ObtenerCamposVacios();
+                                if (coords.Any())
                                 {
-                                    valorColumna = ran.Next(0, 2);
-                                    valorFila = ran.Next(0, 2);
-                                } while (!(gatoSolo.IngresarLocacion(valorFila, valorColumna)));
+                                    Coordenada coord = coords[ran.Next(0, coords.Count - 1)];
+                                    gatoSolo.IngresarLocacion(coord.X, coord.Y);
+                                }
                             }
-
-                            Jugador ganador = gatoSolo.Comprobar(out gatoFin);
-                            if (ganador != null)
-                            {
-                                Console.WriteLine("¡" + ganador.Nombre + " ha ganado!");
-                            }
-
-
-                        } while (gatoFin);                        
+                        } while (!gatoFin);                        
 
                         break;
 
@@ -262,17 +238,17 @@ namespace Gato
 
         public static void PintarGato(Gato gato)
         {
-            Console.WriteLine("    ____1____|___2____|___3___");
+            Console.WriteLine("    ____A____|___B____|___C___");
             Console.WriteLine("   |        %%       %%");
-            Console.WriteLine(" A |    " + gato.TablaDeJuego[0, 0] + "   %%   " + gato.TablaDeJuego[0, 1] + "   %%   " + gato.TablaDeJuego[0, 2] + "");
-            Console.WriteLine("   |        %%       %%");
-            Console.WriteLine("   | %%%%%%%%%%%%%%%%%%%%%%%%%");
-            Console.WriteLine("   |        %%       %%");
-            Console.WriteLine(" B |    " + gato.TablaDeJuego[1, 0] + "   %%   " + gato.TablaDeJuego[1, 1] + "   %%   " + gato.TablaDeJuego[1, 2] + "");
+            Console.WriteLine(" 1 |    " + (gato.TablaDeJuego[0, 0] ?? ' ') + "   %%   " + (gato.TablaDeJuego[0, 1] ?? ' ') + "   %%   " + (gato.TablaDeJuego[0, 2] ?? ' ') + "");
             Console.WriteLine("   |        %%       %%");
             Console.WriteLine("   | %%%%%%%%%%%%%%%%%%%%%%%%%");
             Console.WriteLine("   |        %%       %%");
-            Console.WriteLine(" C |    " + gato.TablaDeJuego[2, 0] + "   %%   " + gato.TablaDeJuego[2, 1] + "   %%   " + gato.TablaDeJuego[2, 2] + "");
+            Console.WriteLine(" 2 |    " + (gato.TablaDeJuego[1, 0] ?? ' ') + "   %%   " + (gato.TablaDeJuego[1, 1] ?? ' ') + "   %%   " + (gato.TablaDeJuego[1, 2] ?? ' ') + "");
+            Console.WriteLine("   |        %%       %%");
+            Console.WriteLine("   | %%%%%%%%%%%%%%%%%%%%%%%%%");
+            Console.WriteLine("   |        %%       %%");
+            Console.WriteLine(" 3 |    " + (gato.TablaDeJuego[2, 0] ?? ' ') + "   %%   " + (gato.TablaDeJuego[2, 1] ?? ' ') + "   %%   " + (gato.TablaDeJuego[2, 2] ?? ' ') + "");
             Console.WriteLine("   |        %%       %%");
             Console.WriteLine("");
         }

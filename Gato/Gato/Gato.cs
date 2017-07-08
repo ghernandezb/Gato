@@ -9,9 +9,20 @@ namespace Gato
 {
     class Gato
     {
+        public static readonly Dictionary<string, Coordenada> Coordenadas = new Dictionary<string, Coordenada>
+        {
+            {"1A", new Coordenada(0,0)},
+            {"1B", new Coordenada(0,1)},
+            {"1C", new Coordenada(0,2)},
+            {"2A", new Coordenada(1,0)},
+            {"2B", new Coordenada(1,1)},
+            {"2C", new Coordenada(1,2)},
+            {"3A", new Coordenada(2,0)},
+            {"3B", new Coordenada(2,1)},
+            {"3C", new Coordenada(2,2)}
+        };
         public const char P1 = 'X';
         public const char P2 = 'O';
-        public const char P3 = ' ';
 
         public char?[,] TablaDeJuego { get; private set; }
         public Jugador Jugador1 { get; private set; }
@@ -39,17 +50,34 @@ namespace Gato
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    TablaDeJuego[i, j] = P3;
+                    TablaDeJuego[i, j] = null;
                 }
             }
 
+        }
+
+        public List<Coordenada> ObtenerCamposVacios() {
+            List<Coordenada> lista = new List<Coordenada>();
+
+            for (int i = 0; i < TablaDeJuego.GetLength(0); i++)
+            {
+                for (int j = 0; j < TablaDeJuego.GetLength(1); j++)
+                {
+                    if (TablaDeJuego[i, j] == null)
+                    {
+                        lista.Add(new Coordenada(i, j));
+                    }
+                }
+            }
+
+            return lista;
         }
 
         public bool IngresarLocacion(int x, int y)
         {
             try
             {
-                if (TablaDeJuego[x, y] == P3)
+                if (TablaDeJuego[x, y] == null)
                 {
                     TablaDeJuego[x, y] = Turno ? P1 : P2;
                     Turno = !Turno;
@@ -68,42 +96,34 @@ namespace Gato
             Jugador ganador = null;
             termino = true;
             char? symbol = null;
-            if (TablaDeJuego[0, 0] != P3 && TablaDeJuego[0, 0] == TablaDeJuego[0, 1] && TablaDeJuego[0, 0] == TablaDeJuego[0, 2])
+            if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[0, 1] && TablaDeJuego[0, 0] == TablaDeJuego[0, 2])
             {
                 symbol = TablaDeJuego[0, 0];
             }
-            else if (TablaDeJuego[1, 0] != P3 && TablaDeJuego[1, 0] == TablaDeJuego[1, 1] && TablaDeJuego[1, 0] == TablaDeJuego[1, 2])
+            else if (TablaDeJuego[1, 0] != null && TablaDeJuego[1, 0] == TablaDeJuego[1, 1] && TablaDeJuego[1, 0] == TablaDeJuego[1, 2])
             {
                 symbol = TablaDeJuego[1, 0];
             }
-            else if (TablaDeJuego[2, 0] != P3 && TablaDeJuego[2, 0] == TablaDeJuego[2, 1] && TablaDeJuego[2, 0] == TablaDeJuego[2, 2])
+            else if (TablaDeJuego[2, 0] != null && TablaDeJuego[2, 0] == TablaDeJuego[2, 1] && TablaDeJuego[2, 0] == TablaDeJuego[2, 2])
             {
                 symbol = TablaDeJuego[2, 0];
             }
-            else if (TablaDeJuego[0, 0] != P3 && TablaDeJuego[0, 0] == TablaDeJuego[1, 0] && TablaDeJuego[0, 0] == TablaDeJuego[2, 0])
+            else if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[1, 0] && TablaDeJuego[0, 0] == TablaDeJuego[2, 0])
             {
                 symbol = TablaDeJuego[0, 0];
             }
-            else if (TablaDeJuego[0, 1] != P3 && TablaDeJuego[0, 1] == TablaDeJuego[1, 1] && TablaDeJuego[0, 1] == TablaDeJuego[2, 1])
+            else if (TablaDeJuego[0, 1] != null && TablaDeJuego[0, 1] == TablaDeJuego[1, 1] && TablaDeJuego[0, 1] == TablaDeJuego[2, 1])
             {
                 symbol = TablaDeJuego[2, 1];
             }
-            else if (TablaDeJuego[0, 2] != P3 && TablaDeJuego[0, 2] == TablaDeJuego[1, 2] && TablaDeJuego[0, 2] == TablaDeJuego[2, 2])
+            else if (TablaDeJuego[0, 2] != null && TablaDeJuego[0, 2] == TablaDeJuego[1, 2] && TablaDeJuego[0, 2] == TablaDeJuego[2, 2])
             {
                 symbol = TablaDeJuego[0, 0];
             }
             else
             {
-                for (int x = 0; x < TablaDeJuego.GetLength(0); x++)
-                {
-                    for (int y = 0; y < TablaDeJuego.GetLength(1); y++)
-                    {
-                        if (TablaDeJuego[x, y] == null)
-                        {
-                            termino = false;
-                            break;
-                        }
-                    }
+                if (ObtenerCamposVacios().Any()) {
+                    termino = false;
                 }
             }
 
@@ -114,5 +134,6 @@ namespace Gato
 
             return ganador;
         }
+
     }
 }
