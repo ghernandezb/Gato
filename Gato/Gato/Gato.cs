@@ -11,6 +11,7 @@ namespace Gato
     {
         public const char P1 = 'X';
         public const char P2 = 'O';
+        public const char P3 = ' ';
 
         public char?[,] TablaDeJuego { get; private set; }
         public Jugador Jugador1 { get; private set; }
@@ -33,6 +34,15 @@ namespace Gato
             Jugador1 = jugador1;
             Jugador2 = jugador2;
             Turno = true;
+
+            for (int i = 0; i<3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    TablaDeJuego[i, j] = P3;
+                }
+            }
+
         }
 
         public bool IngresarLocacion(int x, int y)
@@ -58,27 +68,27 @@ namespace Gato
             Jugador ganador = null;
             termino = true;
             char? symbol = null;
-            if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[0, 1] && TablaDeJuego[0, 0] == TablaDeJuego[0, 2])
+            if (TablaDeJuego[0, 0] != P3 && TablaDeJuego[0, 0] == TablaDeJuego[0, 1] && TablaDeJuego[0, 0] == TablaDeJuego[0, 2])
             {
                 symbol = TablaDeJuego[0, 0];
             }
-            else if (TablaDeJuego[1, 0] != null && TablaDeJuego[1, 0] == TablaDeJuego[1, 1] && TablaDeJuego[1, 0] == TablaDeJuego[1, 2])
+            else if (TablaDeJuego[1, 0] != P3 && TablaDeJuego[1, 0] == TablaDeJuego[1, 1] && TablaDeJuego[1, 0] == TablaDeJuego[1, 2])
             {
                 symbol = TablaDeJuego[1, 0];
             }
-            else if (TablaDeJuego[2, 0] != null && TablaDeJuego[2, 0] == TablaDeJuego[2, 1] && TablaDeJuego[2, 0] == TablaDeJuego[2, 2])
+            else if (TablaDeJuego[2, 0] != P3 && TablaDeJuego[2, 0] == TablaDeJuego[2, 1] && TablaDeJuego[2, 0] == TablaDeJuego[2, 2])
             {
                 symbol = TablaDeJuego[2, 0];
             }
-            else if (TablaDeJuego[0, 0] != null && TablaDeJuego[0, 0] == TablaDeJuego[1, 0] && TablaDeJuego[0, 0] == TablaDeJuego[2, 0])
+            else if (TablaDeJuego[0, 0] != P3 && TablaDeJuego[0, 0] == TablaDeJuego[1, 0] && TablaDeJuego[0, 0] == TablaDeJuego[2, 0])
             {
                 symbol = TablaDeJuego[0, 0];
             }
-            else if (TablaDeJuego[0, 1] != null && TablaDeJuego[0, 1] == TablaDeJuego[1, 1] && TablaDeJuego[0, 1] == TablaDeJuego[2, 1])
+            else if (TablaDeJuego[0, 1] != P3 && TablaDeJuego[0, 1] == TablaDeJuego[1, 1] && TablaDeJuego[0, 1] == TablaDeJuego[2, 1])
             {
                 symbol = TablaDeJuego[2, 1];
             }
-            else if (TablaDeJuego[0, 2] != null && TablaDeJuego[0, 2] == TablaDeJuego[1, 2] && TablaDeJuego[0, 2] == TablaDeJuego[2, 2])
+            else if (TablaDeJuego[0, 2] != P3 && TablaDeJuego[0, 2] == TablaDeJuego[1, 2] && TablaDeJuego[0, 2] == TablaDeJuego[2, 2])
             {
                 symbol = TablaDeJuego[0, 0];
             }

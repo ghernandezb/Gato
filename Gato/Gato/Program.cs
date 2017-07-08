@@ -15,19 +15,20 @@ namespace Gato
         //----- MENU -----//
         public static void Menu()
         {
-            Gato gato = new Gato();
-
             bool opcionMenu = true;
             int numeroMenu = -1;
             int valorInicialMenu = 1;
             int valorFinalMenu = 4;
 
-            Console.WriteLine("Hola!");
+            Console.WriteLine("Bienvenido a MegaGato3000 240fps 4k");
             Console.WriteLine("");
+            Console.WriteLine("Por favor, ingresa tu nombre");
+            Jugador jugador1 = new Jugador(Console.ReadLine());
 
             do
             {
-                Console.WriteLine("Que desea hacer?");
+                Console.WriteLine("");
+                Console.WriteLine(jugador1.Nombre + ", que deseas hacer?");
                 Console.WriteLine("");
                 Console.WriteLine("1. Iniciar juego Solo");
                 Console.WriteLine("2. Iniciar juego con amigo");
@@ -37,26 +38,68 @@ namespace Gato
 
                 string respuestaMenu = Console.ReadLine();
                 numeroMenu = ComprobacionNumero(respuestaMenu, valorInicialMenu, valorFinalMenu);
-                string nombreJugador1;
-                string nombreJugador2;
 
                 Random ran = new Random();
+
                 switch (numeroMenu)
                 {
                     case 1:
                         // INICIAR JUEGO SOLO
-                        Console.WriteLine("Ingrese su nombre");
-                        nombreJugador1 = Console.ReadLine();
-                        nombreJugador2 = Listas.nombres[ran.Next(0, Listas.nombres.Count - 1)]
+                        Jugador jugadorIA = new Jugador(Listas.nombres[ran.Next(0, Listas.nombres.Count - 1)]
                                           + " "
                                           + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]
                                           + " "
-                                          + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)];
+                                          + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]);
+                        Gato gatoSolo = new Gato(jugador1, jugadorIA);
+                        bool gatoFin = true;
+                        int valorColumna = 5;
+
+                        do
+                        {
+                            Console.Clear();
+                            Console.WriteLine("    ____1____|___2____|___3___");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine(" A |    " + gatoSolo.TablaDeJuego[0, 0] + "   %%   " + gatoSolo.TablaDeJuego[0, 1] + "   %%   " + gatoSolo.TablaDeJuego[0, 2] + "");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine("   | %%%%%%%%%%%%%%%%%%%%%%%%%");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine(" B |    " + gatoSolo.TablaDeJuego[1, 0] + "   %%   " + gatoSolo.TablaDeJuego[1, 1] + "   %%   " + gatoSolo.TablaDeJuego[1, 2] + "");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine("   | %%%%%%%%%%%%%%%%%%%%%%%%%");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine(" C |    " + gatoSolo.TablaDeJuego[2, 0] + "   %%   " + gatoSolo.TablaDeJuego[2, 1] + "   %%   " + gatoSolo.TablaDeJuego[2, 2] + "");
+                            Console.WriteLine("   |        %%       %%");
+                            Console.WriteLine("");
+
+                            do
+                            {
+                                Console.WriteLine("En que columna deseas ingresar un valor (1, 2, 3)?");
+                                valorColumna = ComprobacionNumero(Console.ReadLine(), 1, 3);
+
+                                if (valorColumna < 0)
+                                {
+                                    Console.WriteLine("El valor ingresado no es correcto.");
+                                }
+
+                            } while (valorColumna < 0);
+
+
+                            Console.WriteLine("");
+                            Console.WriteLine("");
+                            Console.ReadLine();
+
+                        } while (gatoFin);
+
+
+                        
 
                         break;
 
                     case 2:
                         // INICIAR JUEGO CON AMIGO
+                        Console.WriteLine("Por favor jugador #2, ingresa tu nombre");
+                        Jugador jugador2 = new Jugador(Console.ReadLine());
+                        Gato gatoCompanero = new Gato(jugador1, jugador2);
 
                         break;
 
