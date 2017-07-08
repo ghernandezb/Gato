@@ -49,7 +49,7 @@ namespace Gato
         {
             try
             {
-                if (TablaDeJuego[x, y] == null)
+                if (TablaDeJuego[x, y] == P3)
                 {
                     TablaDeJuego[x, y] = Turno ? P1 : P2;
                     Turno = !Turno;
