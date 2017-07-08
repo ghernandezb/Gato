@@ -53,6 +53,7 @@ namespace Gato
                         Gato gatoSolo = new Gato(jugador1, jugadorIA);
                         bool gatoFin = true;
                         int valorColumna = 5;
+                        int valorFila = 5;
 
                         do
                         {
@@ -73,7 +74,7 @@ namespace Gato
 
                             do
                             {
-                                Console.WriteLine("En que columna deseas ingresar un valor (1, 2, 3)?");
+                                Console.WriteLine("En que COLUMNA deseas ingresar un valor (1, 2, 3)?");
                                 valorColumna = ComprobacionNumero(Console.ReadLine(), 1, 3);
 
                                 if (valorColumna < 0)
@@ -82,11 +83,40 @@ namespace Gato
                                 }
 
                             } while (valorColumna < 0);
+                            do
+                            {
+                                Console.WriteLine("");
+                                Console.WriteLine("En que FILA deseas ingresar un valor (A, B, C)?");
+                                string valorTempFila = Console.ReadLine();
+                                    
+                                switch (valorTempFila.ToUpper())
+                                {
+                                    case "A":
+                                        valorFila = 0;
+                                        break;
+
+                                    case "B":
+                                        valorFila = 1;
+                                        break;
+
+                                    case "C":
+                                        valorFila = 2;
+                                        break;
+
+                                    default:
+                                        Console.WriteLine("Valor ingresado incorrecto.");
+                                        break;
+                                }
 
 
-                            Console.WriteLine("");
-                            Console.WriteLine("");
-                            Console.ReadLine();
+                                valorColumna = ComprobacionNumero(Console.ReadLine(), 1, 3);
+
+                                if (valorColumna < 0)
+                                {
+                                    Console.WriteLine("El valor ingresado no es correcto.");
+                                }
+
+                            } while (valorColumna < 0);
 
                         } while (gatoFin);
 
