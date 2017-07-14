@@ -120,6 +120,14 @@ namespace Gato
             {
                 symbol = TablaDeJuego[0, 0];
             }
+            else if (TablaDeJuego[0, 0] != null && TablaDeJuego[1, 1] == TablaDeJuego[0, 0] && TablaDeJuego[1, 1] == TablaDeJuego[2, 2])
+            {
+                symbol = TablaDeJuego[0, 0];
+            }
+            else if (TablaDeJuego[0, 2] != null && TablaDeJuego[0, 2] == TablaDeJuego[1, 1] && TablaDeJuego[1, 1] == TablaDeJuego[2, 0])
+            {
+                symbol = TablaDeJuego[0, 2];
+            }
             else
             {
                 if (ObtenerCamposVacios().Any()) {

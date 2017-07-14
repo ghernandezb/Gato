@@ -20,7 +20,7 @@ namespace Gato
             int valorInicialMenu = 1;
             int valorFinalMenu = 4;
 
-            Console.WriteLine("Bienvenido a MegaGato3000 240fps 4k");
+            Console.WriteLine("Bienvenido a MeGato3000");
             Console.WriteLine("");
             Console.WriteLine("Por favor, ingresa tu nombre");
             Jugador jugador1 = new Jugador(Console.ReadLine());
@@ -73,7 +73,8 @@ namespace Gato
 
                             if (gatoSolo.Turno)
                             {
-                                Console.WriteLine("Es el turno de " + jugador1.Nombre);
+                                Console.WriteLine("Es el turno de " + jugador1.Nombre + ", por favor ingresa una ubicacion empezando por el numero y luego la letra.");
+                                Console.WriteLine("Ejemplo: 2a");
                                 Console.WriteLine("");
 
                                 bool valido;
@@ -98,8 +99,9 @@ namespace Gato
                             }
                             else
                             {
-                                Console.WriteLine("Es el turno de " + jugadorIA.Nombre);
-                                Console.WriteLine("");
+                                Console.WriteLine("Es el turno de " + jugadorIA.Nombre + ", por favor ingresa una ubicacion empezando por el numero y luego la letra.");
+                                Console.WriteLine("Ejemplo: 2a");
+                                System.Threading.Thread.Sleep(2000);
 
                                 List<Coordenada> coords = gatoSolo.ObtenerCamposVacios();
                                 if (coords.Any())
@@ -114,85 +116,67 @@ namespace Gato
 
                     case 2:
                         // INICIAR JUEGO CON AMIGO
-                        Jugador jugador2 = new Jugador(Listas.nombres[ran.Next(0, Listas.nombres.Count - 1)]
-                                          + " "
-                                          + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]
-                                          + " "
-                                          + Listas.apellidos[ran.Next(0, Listas.apellidos.Count - 1)]);
-                        Gato gatoAmigo = new Gato(jugador1, jugador2);
+                        Console.WriteLine("Jugador #2, por favor ingresa tu nombre.");
+                        Jugador jugador2 = new Jugador(Console.ReadLine());
+
+                        Gato gatoDoble = new Gato(jugador1, jugador2);
 
                         do
                         {
                             Console.Clear();
 
-                            if (gatoAmigo.Turno)
-                            {
-                                Console.WriteLine("Es el turno de " + jugador1.Nombre);
-                                Console.WriteLine("");
-                            }
-                            else
-                            {
-                                Console.WriteLine("Es el turno de " + jugador2.Nombre);
-                                Console.WriteLine("");
-                            }
+                            PintarGato(gatoDoble);
 
-                            PintarGato(gatoAmigo);
 
-                            do
-                            {
-                                Console.WriteLine("En que COLUMNA deseas ingresar un valor (1, 2, 3)?");
-                                valorColumna = (ComprobacionNumero(Console.ReadLine(), 1, 3) - 1);
-
-                                if (valorColumna < 0)
-                                {
-                                    Console.WriteLine("El valor ingresado no es correcto.");
-                                }
-
-                            } while (valorColumna < 0);
-
-                            do
-                            {
-                                Console.WriteLine("");
-                                Console.WriteLine("En que FILA deseas ingresar un valor (A, B, C)?");
-                                string valorTempFila = Console.ReadLine();
-
-                                switch (valorTempFila.ToUpper())
-                                {
-                                    case "A":
-                                        valorFila = 0;
-                                        break;
-
-                                    case "B":
-                                        valorFila = 1;
-                                        break;
-
-                                    case "C":
-                                        valorFila = 2;
-                                        break;
-
-                                    default:
-                                        Console.WriteLine("Valor ingresado incorrecto.");
-                                        valorColumna = -1;
-                                        break;
-                                }
-                            } while (valorColumna < 0);
-
-                            if (!(gatoAmigo.IngresarLocacion(valorFila, valorColumna)))
-                            {
-                                Console.WriteLine("");
-                                Console.WriteLine("La ubicacion indicada ya se encuentra llena.");
-                                Console.WriteLine("Presione ENTER para ingresar una nueva ubicacion");
-                                Console.ReadLine();
-                            }
-
-                            Jugador ganador = gatoAmigo.Comprobar(out gatoFin);
+                            Jugador ganador = gatoDoble.Comprobar(out gatoFin);
                             if (ganador != null)
                             {
                                 Console.WriteLine("¡" + ganador.Nombre + " ha ganado!");
+                                break;
                             }
 
+                            if (gatoDoble.Turno)
+                            {
+                                Console.WriteLine("Es el turno de " + jugador1.Nombre + ", por favor ingresa una ubicacion empezando por el numero y luego la letra.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Es el turno de " + jugador2.Nombre + ", por favor ingresa una ubicacion empezando por el numero y luego la letra.");
+                            }
+                            Console.WriteLine("Ejemplo: 2a");
+                            Console.WriteLine("");
 
-                        } while (gatoFin);
+
+                            bool valido;
+                            do
+                            {
+                                string opcion = Console.ReadLine();
+                                Coordenada coord;
+                                if (valido = Gato.Coordenadas.TryGetValue(opcion.ToUpper(), out coord))
+                                {
+                                    if (!(valido = gatoDoble.IngresarLocacion(coord.X, coord.Y)))
+                                    {
+                                        Console.WriteLine("");
+                                        Console.WriteLine("La ubicacion indicada ya se encuentra llena.");
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("");
+                                    Console.WriteLine("El valor ingresado no es correcto.");
+                                }
+                            } while (!valido);
+
+                            if (!gatoFin)
+                            {
+                                Console.WriteLine("Desea seguir jugando?");
+                                string test = Console.ReadLine();
+                                if (test == "1")
+                                {
+                                    gatoFin = !gatoFin;
+                                }
+                            }
+                        } while (!gatoFin);
 
                         break;
 
@@ -204,6 +188,8 @@ namespace Gato
                     case 4:
                         // SALIR
                         opcionMenu = false;
+                        Console.WriteLine("Hasta luego!");
+                        System.Threading.Thread.Sleep(900);
                         break;
 
                     default:

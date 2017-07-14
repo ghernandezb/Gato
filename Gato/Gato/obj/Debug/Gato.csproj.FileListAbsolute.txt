@@ -10,3 +10,9 @@ C:\Users\gabri\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.pdb
 C:\Users\gabri\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.csprojResolveAssemblyReference.cache
 C:\Users\gabri\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.exe
 C:\Users\gabri\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.pdb
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.exe.config
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.exe
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\bin\Debug\Gato.pdb
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.csprojResolveAssemblyReference.cache
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.exe
+C:\Users\g.hernandez.bermudez\Documents\GitHub\Gato\Gato\Gato\obj\Debug\Gato.pdb
